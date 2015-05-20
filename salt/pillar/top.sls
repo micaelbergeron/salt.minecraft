@@ -1,3 +1,5 @@
 base:
-  '*':
-    - minecraft
+  '*.vagrantup.com':
+    - minecraft.sample
+  kratos:
+    - minecraft.ostigaming

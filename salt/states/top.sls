@@ -1,5 +1,7 @@
 base:
   '*':
     - base
+  '*.vagrantup.com':
     - msm
-    - teamspeak3
+  kratos:
+    - msm.spigot

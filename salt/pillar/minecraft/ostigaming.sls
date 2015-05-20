@@ -1,6 +1,11 @@
+include:
+  - minecraft
+
 minecraft:
   servers:
     ostigaming:
+      started: yes
+      accept_eula: yes
       port: 25565
       jar-group: spigot
       motd: Raph est vraiment une kisse.
@@ -8,8 +13,3 @@ minecraft:
         name: world
         seed: -740172851302529273
         max_players: 20
-
-msm:
-  install_dir: /opt/msm
-  jar-groups:
-    spigot: /opt/spigot/bin/spigot.jar

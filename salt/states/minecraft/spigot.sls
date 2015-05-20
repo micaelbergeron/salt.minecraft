@@ -6,8 +6,8 @@ include:
 
 scaffolding spigot directories:
   file.directory:
+    - makedirs: yes
     - names:
-      - /opt/spigot
       - /opt/spigot/bin
       - /opt/spigot/buildtools
     - user: minecraft
@@ -22,7 +22,7 @@ install buildtools:
     - user: minecraft
     - group: minecraft
     - require:
-      - file: /opt/spigot
+      - file: /opt/spigot/buildtools
 
 build spigotmc:
   cmd.wait:
@@ -37,6 +37,9 @@ deploy spigotmc:
     - use:
       - cmd: java -jar BuildTools.jar
     - name: mv spigot*.jar /opt/spigot/bin/spigot.jar
+    - onlyif: ls spigot*.jar
     - watch:
       - cmd: java -jar BuildTools.jar
+    - require:
+      - file: /opt/spigot/bin
 

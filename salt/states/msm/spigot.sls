@@ -1,0 +1,3 @@
+include:
+  - msm
+  - minecraft.spigot
