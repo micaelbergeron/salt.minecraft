@@ -11,7 +11,7 @@ scaffolding spigot directories:
       - /opt/spigot/bin
       - /opt/spigot/buildtools
     - user: minecraft
-    - mode: 740
+    - mode: 755
 
 install buildtools:
   file.managed:
@@ -19,9 +19,10 @@ install buildtools:
     - source: https://hub.spigotmc.org/jenkins/job/BuildTools/lastStableBuild/artifact/target/BuildTools.jar
     - source_hash: md5=315b5360005e9eaaf3be1da7c42fecdb
     - mode: 755
-    - makedirs: true
     - user: minecraft
     - group: minecraft
+    - require:
+      - file: /opt/spigot
 
 build spigotmc:
   cmd.wait:

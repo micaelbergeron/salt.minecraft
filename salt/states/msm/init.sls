@@ -2,7 +2,15 @@
 # more info here: 
 
 include:
+  - base
   - minecraft.spigot
+
+install msm requirements:
+  pkg.installed:
+    - pkgs: 
+      - zip
+      - rsync
+      - screen
 
 /opt/msm:
   file.directory:
@@ -77,6 +85,22 @@ set the server jar to {{ props['jar-group'] }}:
   cmd.run:
     - user: minecraft
     - name: msm {{ server }} jar {{ props['jar-group'] }} main.jar
+
+accept minecraft eula:
+  file.managed:
+    - name: /opt/msm/servers/{{ server }}/eula.txt
+    - contents: eula=true
+
+set server.properties file:
+  file.managed:
+    - name: /opt/msm/servers/{{ server }}/server.properties
+    - source: salt://minecraft/files/server.properties
+    - template: jinja
+    - context:
+        motd: {{ props['motd'] }}
+        name: {{ props['world']['name']}}
+        seed: {{ props['world']['seed'] }}
+        max_players: {{ props['world']['max_players'] }}
 
 # create the server, then add the worlds
 {% endfor %}
