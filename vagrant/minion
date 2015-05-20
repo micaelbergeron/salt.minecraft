@@ -1,0 +1,11 @@
+id: test.vagrantup.com
+
+file_client: local
+
+file_roots:
+  base:
+    - /vagrant/salt/states
+
+pillar_roots:
+  base:
+    - /vagrant/salt/pillar
