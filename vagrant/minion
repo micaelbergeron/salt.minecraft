@@ -4,8 +4,8 @@ file_client: local
 
 file_roots:
   base:
-    - /vagrant/salt/states
+    - /srv/salt/states
 
 pillar_roots:
   base:
-    - /vagrant/salt/pillar
+    - /srv/salt/pillar

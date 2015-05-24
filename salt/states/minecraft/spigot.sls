@@ -31,6 +31,8 @@ build spigotmc:
     - user: minecraft
     - watch:
       - file: /opt/spigot/buildtools/BuildTools.jar
+    - require:
+      - user: minecraft
 
 deploy spigotmc:
   cmd.run:

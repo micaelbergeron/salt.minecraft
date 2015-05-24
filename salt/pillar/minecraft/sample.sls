@@ -4,11 +4,14 @@ include:
 minecraft:
   servers:
     sample:
-      started: no
+      started: yes
       accept_eula: yes
-      port: 25567
-      jar-group: minecraft
-      motd: Welcome to your Minecraft server.
-      world:
+      msm:
+        jar-group: minecraft
+        version: minecraft/1.3.0
+        ram: 512
+      properties:
         name: world
+        port: 25565
+        motd: Welcome to your Minecraft server.
         max_players: 4

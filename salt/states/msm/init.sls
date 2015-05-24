@@ -15,6 +15,8 @@ install msm requirements:
 /opt/msm:
   file.directory:
     - user: minecraft
+    - require:
+      - user: minecraft
 
 install msm:
   file.managed:
@@ -22,7 +24,6 @@ install msm:
     - source: http://git.io/J1GAxA
     - source_hash: sha1=a56593d5d72d98ff4aa8006bb64c993c5d3d54fe
     - mode: 755
-    - user: minecraft
     - require:
       - file: /opt/msm
 
@@ -45,18 +46,19 @@ add msm cron script:
     - require:
       - file: /usr/local/bin/msm
 
-update msm:
-  cmd.run:
-    - name: yes | /usr/local/bin/msm update
-    - require:
-      - file: /usr/local/bin/msm
-
 /etc/msm.conf:
   file.managed:
     - source: salt://msm/files/msm.conf
     - template: jinja
     - require:
       - file: /usr/local/bin/msm
+
+update msm:
+  cmd.run:
+    - name: yes | /usr/local/bin/msm update
+    - require:
+      - file: /usr/local/bin/msm
+      - file: /etc/msm.conf
 
 # add all jar groups
 {% for group, path in salt['pillar.get']('msm:jar-groups').items() %}
@@ -82,12 +84,13 @@ add {{group}} to jar groups:
     - require:
       - file: /usr/local/bin/msm
 
-{{server}} ~ set the server jar to {{props['jar-group']}}:
+{{server}} ~ set the server jar to {{props.msm['jar-group']}}:
   cmd.run:
     - user: minecraft
-    - name: msm {{server}} jar {{props['jar-group']}} main.jar
+    - name: msm {{server}} jar {{props.msm['jar-group']}} main.jar
     - require:
       - file: /usr/local/bin/msm
+      - user: minecraft
 
 {{server}} ~ accept minecraft eula:
   file.managed:
@@ -97,20 +100,21 @@ add {{group}} to jar groups:
 {{server}} ~ set server.properties file:
   file.managed:
     - name: /opt/msm/servers/{{server}}/server.properties
-    - source: salt://minecraft/files/server.properties
+    - source: salt://msm/files/server.properties
     - template: jinja
     - context: 
-        motd: {{ props.motd }}
-        port: {{ props.port }}
-        world_options: {{ props.world }}
+        msm: {{ props.msm }}
+        options: {{ props.properties }}
 
 {% set action = 'start' if props.started else 'stop' %}
 {{server}} ~ {{action}}:
   cmd.run:
+    - cwd: /usr/local/bin
     - user: minecraft
     - name: msm {{server}} {{action}}
+    - watch:
+      - file: /opt/msm/servers/{{server}}/server.properties
     - require:
       - file: /usr/local/bin/msm
-
-# create the server, then add the worlds
+      - user: minecraft
 {% endfor %}

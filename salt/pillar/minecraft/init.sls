@@ -6,6 +6,4 @@ minecraft:
 msm:
   install_dir: /opt/msm
   jar-groups:
-    spigot: /opt/spigot/bin/spigot.jar
     minecraft: /opt/minecraft/bin/minecraft_server.jar
-
