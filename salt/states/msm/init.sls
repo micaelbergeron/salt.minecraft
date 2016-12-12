@@ -22,10 +22,11 @@ install msm:
   file.managed:
     - name: /usr/local/bin/msm
     - source: http://git.io/J1GAxA
-    - source_hash: sha1=a56593d5d72d98ff4aa8006bb64c993c5d3d54fe
+    - source_hash: sha1=8a9ae06188220ab6432bafd31766a564bc6e2937
     - mode: 755
     - require:
       - file: /opt/msm
+    - unless: file /usr/local/bin/msm
 
 create init.d link:
   file.symlink:
@@ -55,7 +56,7 @@ add msm cron script:
 
 update msm:
   cmd.run:
-    - name: yes | /usr/local/bin/msm update
+    - name: /usr/local/bin/msm update --noinput
     - require:
       - file: /usr/local/bin/msm
       - file: /etc/msm.conf

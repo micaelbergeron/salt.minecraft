@@ -17,13 +17,14 @@ install buildtools:
   file.managed:
     - name: /opt/spigot/buildtools/BuildTools.jar
     - source: https://hub.spigotmc.org/jenkins/job/BuildTools/lastStableBuild/artifact/target/BuildTools.jar
-    - source_hash: md5=315b5360005e9eaaf3be1da7c42fecdb
+    - source_hash: md5=fc7376ac47ccd57dbd17e141e71389b6
     - mode: 755
     - user: minecraft
     - group: minecraft
     - require:
       - file: /opt/spigot/buildtools
 
+# todo: for each versions
 build spigotmc:
   cmd.wait:
     - name: java -jar BuildTools.jar
@@ -44,4 +45,3 @@ deploy spigotmc:
       - cmd: java -jar BuildTools.jar
     - require:
       - file: /opt/spigot/bin
-

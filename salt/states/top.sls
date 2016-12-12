@@ -2,6 +2,8 @@ base:
   '*':
     - base
   '*.vagrantup.com':
-    - msm
+    - msm.spigot
+    - overviewer
   kratos:
     - msm.spigot
+    - overviewer
